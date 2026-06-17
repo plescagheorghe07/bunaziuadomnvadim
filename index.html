@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Visio - Experiența Supremă Mobile</title>
+    <style>
+        /* --- Reset & Fonturi Moderne --- */
+        :root {
+            --bg-color: #000000;
+            --text-color: #f5f5f7;
+            --text-secondary: #86868b;
+            --accent-color: #2997ff;
+            --card-bg: #121212;
+            --border-color: #333333;
+            /* Efect Glassmorphism pentru header */
+            --header-bg: rgba(22, 22, 23, 0.8); 
+            --blur: saturate(180%) blur(20px);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.47059;
+            font-weight: 400;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* --- HEADER MODERN (Sticky & Glassmorphism) --- */
+        .main-header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            height: 70px;
+            background-color: var(--header-bg);
+            backdrop-filter: var(--blur);
+            -webkit-backdrop-filter: var(--blur);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: center; /* Centrează containerul intern */
+        }
+
+        .header-container {
+            width: 100%;
+            max-width: 1200px;
+            padding: 0 22px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Branding Visio */
+        .visio-branding {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--text-color);
+        }
+
+        .visio-logo {
+            height: 34px; /* Dimensiune optimă pentru icon */
+            width: auto;
+            display: block;
+        }
+
+        .visio-name {
+            font-size: 21px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        /* Informații Student - Integrate Elegant */
+        .exam-meta {
+            text-align: right;
+            color: var(--text-secondary);
+            font-size: 13px;
+        }
+
+        .student-name {
+            color: var(--text-color);
+            font-weight: 500;
+        }
+
+        .exam-subject {
+            opacity: 0.8;
+        }
+
+        /* --- CONTAINER PRINCIPAL (Layout Grid) --- */
+        .promo-container {
+            max-width: 1200px;
+            margin: 140px auto 60px; /* Margine sus mai mare pentru sticky header */
+            padding: 0 22px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 60px;
+            align-items: center;
+            min-height: calc(100vh - 200px);
+        }
+
+        /* --- Secțiunea Vizuală (Stânga) --- */
+        .product-gallery {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .product-image {
+            max-width: 100%;
+            height: auto;
+            border-radius: 30px;
+            /* Efect de strălucire subtilă în spate */
+            box-shadow: 0 0 100px rgba(41, 151, 255, 0.15); 
+            transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+            animation: heroIn 1s ease-out;
+        }
+
+        .product-image:hover {
+            transform: scale(1.04) translateY(-10px);
+        }
+
+        /* --- Secțiunea de Detalii (Dreapta) --- */
+        .product-details {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
+            animation: fadeInRight 1s ease-out;
+        }
+
+        .tag {
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--accent-color);
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .product-title {
+            font-size: 56px;
+            font-weight: 700;
+            letter-spacing: -1.5px;
+            line-height: 1.07;
+            background: linear-gradient(180deg, #fff, #888);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .product-price {
+            font-size: 28px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+
+        .product-description {
+            color: var(--text-secondary);
+            font-size: 19px;
+            font-weight: 400;
+            line-height: 1.4211;
+            max-width: 90%;
+        }
+
+        /* --- Tabel Modernizat --- */
+        .specs-card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 18px;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        .specs-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .specs-table th, .specs-table td {
+            padding: 16px;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .specs-table tr:last-child th, 
+        .specs-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .specs-table th {
+            color: var(--text-secondary);
+            font-weight: 400;
+            width: 35%;
+            font-size: 15px;
+        }
+
+        .specs-table td {
+            color: var(--text-color);
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        /* --- Buton JS & Zonă Expandabilă --- */
+        .btn-more {
+            background-color: var(--accent-color);
+            color: #ffffff;
+            border: none;
+            padding: 18px 32px;
+            font-size: 17px;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            align-self: flex-start;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .btn-more:hover {
+            background-color: #0071e3;
+            transform: scale(1.02);
+        }
+
+        .extra-info {
+            display: none; /* Ascuns */
+            margin-top: -10px;
+            animation: expandFade 0.5s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+        }
+
+        .info-card {
+            background-color: var(--card-bg);
+            padding: 25px;
+            border-radius: 18px;
+            border: 1px solid rgba(41, 151, 255, 0.2);
+        }
+
+        .extra-info h3 {
+            margin-bottom: 15px;
+            font-size: 21px;
+            color: var(--accent-color);
+        }
+
+        .extra-info ul {
+            list-style-type: none;
+        }
+
+        .extra-info li {
+            margin-bottom: 10px;
+            color: var(--text-secondary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .extra-info li::before {
+            content: "✦";
+            color: var(--accent-color);
+            font-size: 12px;
+        }
+
+        /* --- Animații --- */
+        @keyframes heroIn {
+            from { opacity: 0; transform: scale(0.9) translateY(30px); }
+            to { opacity: 1; transform: scale(1) translateY(0); }
+        }
+
+        @keyframes fadeInRight {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes expandFade {
+            from { opacity: 0; transform: translateY(-15px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* --- Responsivitate (Tablete/Mobile) --- */
+        @media (max-width: 992px) {
+            .promo-container {
+                grid-template-columns: 1fr;
+                text-align: center;
+                margin-top: 110px;
+                gap: 40px;
+            }
+
+            .product-image {
+                max-width: 70%;
+            }
+
+            .product-details {
+                align-items: center;
+            }
+
+            .btn-more {
+                align-self: center;
+            }
+
+            .specs-table th, .specs-table td {
+                padding: 12px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-header { height: auto; padding: 10px 0; }
+            .header-container { flex-direction: column; gap: 8px; }
+            .exam-meta { text-align: center; }
+            .product-title { font-size: 40px; }
+            .product-image { max-width: 90%; }
+        }
+    </style>
+</head>
+<body>
+
+    <header class="main-header">
+        <div class="header-container">
+            <a href="https://visio.md" class="visio-branding" target="_blank">
+                <img src="https://visio.md/assets/img/visio_notext.png" alt="Visio Logo" class="visio-logo">
+                <span class="visio-name">Visio</span>
+            </a>
+            
+            <div class="exam-meta">
+                <div>Realizat de: <span class="student-name">Pleșca Gheorghe</span></div>
+                <div class="exam-subject">Bilet 14 | Client-Side Web</div>
+            </div>
+        </div>
+    </header>
+
+    <main class="promo-container">
+        
+        <section class="product-gallery">
+            <img src="https://images.unsplash.com/photo-1695048133142-1a20484d2569?q=80&w=700" alt="Visio Phone Pro" class="product-image">
+        </section>
+
+        <section class="product-details">
+            <span class="tag">Performanță fără compromis</span>
+            <h1 class="product-title">Visio Phone Pro</h1>
+            <div class="product-price">de la 1.199 € sau 49.99 €/lună</div>
+            
+            <p class="product-description">
+                Ecosistemul Visio atinge noi culmi. Carcasă din titan, cip ultra-rapid și o experiență vizuală revoluționară.
+            </p>
+
+            <div class="specs-card">
+                <table class="specs-table">
+                    <tr>
+                        <th>Cip</th>
+                        <td>A18 Pro (Performanță Visio optimized)</td>
+                    </tr>
+                    <tr>
+                        <th>Ecran</th>
+                        <td>6.7" Super Retina XDR ProMotion</td>
+                    </tr>
+                    <tr>
+                        <th>Cameră</th>
+                        <td>Sistem Pro 48MP (Fuziune Spatială)</td>
+                    </tr>
+                    <tr>
+                        <th>Stocare</th>
+                        <td>Până la 1TB stocare rapidă</td>
+                    </tr>
+                </table>
+            </div>
+
+            <button id="toggleBtn" class="btn-more">Descoperă inovația Visio</button>
+
+            <div id="moreInfoBlock" class="extra-info">
+                <div class="info-card">
+                    <h3>Tehnologii Exclusive Visio</h3>
+                    <ul>
+                        <li>Interfață optimizată prin "Visio Neural Engine".</li>
+                        <li>Sistem optic avansat pentru mod Noapte cinematic.</li>
+                        <li>Încărcare completă în doar 35 de minute.</li>
+                        <li>Securitate biometrică de ultimă generație.</li>
+                    </ul>
+                </div>
+            </div>
+
+        </section>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const toggleButton = document.getElementById('toggleBtn');
+            const infoBlock = document.getElementById('moreInfoBlock');
+
+            toggleButton.addEventListener('click', () => {
+                // Afișează/Ascunde blocul folosind stilul 'display'
+                if (infoBlock.style.display === 'block') {
+                    infoBlock.style.display = 'none';
+                    toggleButton.textContent = 'Descoperă inovația Visio';
+                } else {
+                    infoBlock.style.display = 'block';
+                    toggleButton.textContent = 'Mai puține detalii';
+                    // Scroll lin către informația nouă
+                    infoBlock.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>
